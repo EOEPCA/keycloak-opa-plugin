@@ -1,8 +1,0 @@
-{
-  "example_data2": {
-    "privileged_users": [
-      "alice", "bob", "fred", "henry", "maude", "user"
-    ]
-  }
-}
-
