@@ -19,5 +19,5 @@ email_verified {
 default privileged_user = false
 
 privileged_user {
-    example_data.privileged_users[_] = input.identity.attributes.preferred_username
+    data.example_data.privileged_users[_] = input.identity.attributes.preferred_username
 }
