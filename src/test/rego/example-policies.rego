@@ -16,8 +16,8 @@ email_verified {
 }
 
 # Example rule: Permit if user is in the list of privileged users
-#default privileged_user = false
-#
-#privileged_user {
-#    example_data.privileged_users[_] = input.identity.attributes.preferred_username
-#}
+default privileged_user = false
+
+privileged_user {
+    example_data.privileged_users[_] = input.identity.attributes.preferred_username
+}
