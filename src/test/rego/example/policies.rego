@@ -12,12 +12,12 @@ default allow_all = true
 default email_verified = false
 
 email_verified {
-    input.identity.email_verified[_] = "true"
+    input.identity.attributes.email_verified[_] = "true"
 }
 
 # Example rule: Permit if user is in the list of privileged users
 default privileged_user = false
 
 privileged_user {
-    data.src.test.rego.example.privileged_users[_] = input.identity.attributes.preferred_username
+    data.src.test.rego.example.privileged_users[_] = input.identity.attributes.preferred_username[_]
 }
