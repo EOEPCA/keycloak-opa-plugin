@@ -1,0 +1,2 @@
+# The Docker registry to push the image to
+dockerRegistry=<DOCKER-REGISTRY>
