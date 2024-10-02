@@ -13,7 +13,7 @@
 
 package de.werum.eo.keycloak.authorization.provider.opa;
 
-import org.keycloak.representations.idm.authorization.JSPolicyRepresentation;
+import org.keycloak.representations.idm.authorization.AbstractPolicyRepresentation;
 
 /**
  * Policy representation for OPA-based policies.
@@ -22,7 +22,7 @@ import org.keycloak.representations.idm.authorization.JSPolicyRepresentation;
  * @version SVN $Revision$ $Date$
  * @since
  */
-public class OpaPolicyRepresentation extends JSPolicyRepresentation/*AbstractPolicyRepresentation*/ { // TODO: Revert to AbstractPolicyRepresentation when UI is ready!
+public class OpaPolicyRepresentation extends AbstractPolicyRepresentation {
 
    private String policyPath;
 
@@ -38,4 +38,6 @@ public class OpaPolicyRepresentation extends JSPolicyRepresentation/*AbstractPol
    public void setPolicyPath( String policyPath ) {
       this.policyPath = policyPath;
    }
+
+
 }

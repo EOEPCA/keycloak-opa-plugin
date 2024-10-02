@@ -15,7 +15,9 @@ package de.werum.eo.keycloak.authorization.provider.opa;
 
 import java.io.File;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jboss.logging.Logger;
 import org.keycloak.Config;
@@ -93,6 +95,16 @@ public class OpaPolicyProviderFactory implements PolicyProviderFactory<OpaPolicy
    }
 
    @Override
+   public void onCreate(Policy policy, OpaPolicyRepresentation representation, AuthorizationProvider authorization) {
+      updatePolicy(policy, representation);
+   }
+
+   @Override
+   public void onUpdate(Policy policy, OpaPolicyRepresentation representation, AuthorizationProvider authorization) {
+      updatePolicy(policy, representation);
+   }
+
+   @Override
    public void postInit( KeycloakSessionFactory factory ) {
 
    }
@@ -112,5 +124,13 @@ public class OpaPolicyProviderFactory implements PolicyProviderFactory<OpaPolicy
                   "Directory containing configuration files for OPA policies",
                   ProviderConfigProperty.STRING_TYPE, "${jboss.server.config.dir}/opa-policies"));
 //      return PolicyProviderFactory.super.getConfigMetadata();
+   }
+
+   private void updatePolicy(Policy policy, OpaPolicyRepresentation representation) {
+      Map<String, String> config = new HashMap<>(policy.getConfig());
+
+      config.put("policyPath", representation.getPolicyPath());
+
+      policy.setConfig(config);
    }
 }
