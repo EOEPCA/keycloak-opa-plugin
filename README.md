@@ -1,7 +1,7 @@
 # Keycloak OPA Plugin
 
-**Note**: This plugin is work in progress in an early state.
-It is still far from being fit for operational use.
+**Note**: Development of this plugin is still in progress.
+The current version already works, but still has some rough edges.
 
 ## Purpose
 
@@ -14,19 +14,14 @@ that delegate policy evaluation to an Open Policy Agent (OPA).
 ### Existing capabilities
 
 The plugin can be integrated into Keycloak as a Policy SPI.
-It is possible to create OPA-related policies via the Keycloak Admin UI.
-However, this is currently simply reusing the JS policy form, which only
-allows entering a name and a description, but no OPA-specific attributes.
+It is possible to create and edit OPA-related policies via the
+Keycloak Admin UI.
 
-As a preliminary solution, by default, the name of the policy is used as
-the path to the policy document in OPA (relative to the OPA base URI).
-Alternatively, the path can be configured in a property file. See section
-"Policy configuration" below for details.
-
-Furthermore, the input document currently contains a mostly fixed set of
+The input document currently contains a mostly fixed set of
 information, which includes all attributes of the affected user and some
-general information. However, meanwhile it is also possible to optionally
-add permission and resource metadata for individual policies.
+general information. However, it is also possible to optionally
+add permission and resource metadata for individual policies. See section
+"Policy configuration" below for details.
 
 As the result of a policy evaluation, the adapter currently only accepts a
 simple boolean value that denotes whether the policy evaluation resulted in
@@ -42,19 +37,23 @@ operationally:
 
 * Authentication of Keycloak against OPA
 * Encryption (HTTPS/ TLS)
-* Full configurability of policies via Keycloak Admin UI 
 
 ### Possible future enhancements
 
 The following features are just ideas for now. They may be added if required:
 
 * Support for non-boolean OPA responses 
+* Streamlining of input document tailoring
 * Further policy-specific tailoring of input document
 
 ### Caveats
 
 The Policy SPI of Keycloak is an internal SPI. This implies that the plugin
 may not work with future versions of Keycloak out of the box.
+
+The Theme SPI used to add a custom UI for OPA policies also depends on
+the Keycloak version. The current Admin UI extension only works with
+Keycloak 24. An update for Keycloak 25 is being prepared.
 
 ## Configuration
 
@@ -70,21 +69,22 @@ command line or as environment variables.
 
 ### Policy configuration
 
-Policies can be created via the Keycloak Admin UI. However, as already stated above,
-there is currently no specific UI for creating OPA-related policies. By default,
-the plugin interprets the policy name as a subpath to append to the OPA base URI.
-This allows creating policy rules that refer to certain OPA rules in an easy way,
-but forces the policy names to follow a certain convention.
+Policies can meanwhile be created and basically configured via the Keycloak
+Admin UI.
 
-As an alternative, it is possible to place a configuration file in the configured
+Additionally, it is possible to place a configuration file in the configured
 OPA policy directory. The base name of this file must match the policy name, and
 its extension must be `.properties`. The file may contain the following properties:
 
 * `policyPath`: Subpath (e.g. `my_package/my_policy_rule`) to append to the OPA
-  base URI
+  base URI (deprecated, should be configured via UI)
 * `input.includePermission`: If this is set to `true`, the plugin adds
   a section with permission-related information to the input document.
 * `input.includeResource`: If this is set to `true`, the plugin adds
   resource-related information to the permission section of the input
   document. This implies that `input.includePermission` must also be set to
   `true`.
+
+Note that this way of configuring policies is a preliminary solution.
+It will be removed when all relevant properties (esp. `input.include*`)
+can be configured via the Admin UI.
