@@ -39,7 +39,8 @@ default allow = false
 allow if {
     claims := verified_claims
     claims != null
-    print("[wsapi policy] Path: ", request.path)
+    path := split(request.path, "/")
+    print("[wsapi policy] Path: ", request.path, " -> ", path)
     print("[wsapi policy] Method: ", request.method)
     print("[wsapi policy] Claims: ", claims)
 }
