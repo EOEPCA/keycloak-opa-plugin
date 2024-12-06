@@ -16,8 +16,6 @@ package eoepca.wsapi
 import rego.v1
 import input.request
 
-default allow = true
-
 # TODO: Maybe move generic parts to a utility module (maybe called "iam") if possible
 jwks_request(url) := http.send({
     "url": url,
@@ -36,10 +34,12 @@ verified_claims := claims if {
     claims := io.jwt.decode(token)[1]
 }
 
+default allow = false
+
 allow if {
     claims := verified_claims
     claims != null
-    print("[wsapi policy] Path: " + request.path)
-    print("[wsapi policy] Method: " + request.method)
-    print("[wsapi policy] Claims: " + claims)
+    print("[wsapi policy] Path: ", request.path)
+    print("[wsapi policy] Method: ", request.method)
+    print("[wsapi policy] Claims: ", claims)
 }
