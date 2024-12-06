@@ -40,6 +40,10 @@ allow if {
     claims := verified_claims
     claims != null
     path := split(request.path, "/")
+    "" == path[0]
+    "workspaces" == path[1]
+    wsName := path[2]
+    "ws_access" in claims.resource_access[wsName].roles
     print("[wsapi policy] Path: ", request.path, " -> ", path)
     print("[wsapi policy] Method: ", request.method)
     print("[wsapi policy] Claims: ", claims)
