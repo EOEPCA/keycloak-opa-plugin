@@ -72,6 +72,8 @@ public class OpaPolicyProviderFactory implements PolicyProviderFactory<OpaPolicy
    public OpaPolicyRepresentation toRepresentation( Policy policy, AuthorizationProvider authorization ) {
       final OpaPolicyRepresentation representation = new OpaPolicyRepresentation();
       representation.setPolicyPath(policy.getConfig().get( "policyPath" ));
+      representation.setIncludePermission(Boolean.parseBoolean(policy.getConfig().get( "input.includePermission" )));
+      representation.setIncludeResource(Boolean.parseBoolean(policy.getConfig().get( "input.includeResource" )));
       return representation;
    }
 
@@ -130,6 +132,8 @@ public class OpaPolicyProviderFactory implements PolicyProviderFactory<OpaPolicy
       Map<String, String> config = new HashMap<>(policy.getConfig());
 
       config.put("policyPath", representation.getPolicyPath());
+      config.put( "input.includePermission", Boolean.toString( representation.isIncludePermission() ) );
+      config.put( "input.includeResource", Boolean.toString( representation.isIncludeResource() ) );
 
       policy.setConfig(config);
    }

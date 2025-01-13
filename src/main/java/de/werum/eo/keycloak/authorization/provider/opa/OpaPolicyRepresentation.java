@@ -25,6 +25,8 @@ import org.keycloak.representations.idm.authorization.AbstractPolicyRepresentati
 public class OpaPolicyRepresentation extends AbstractPolicyRepresentation {
 
    private String policyPath;
+   private boolean includePermission = true;
+   private boolean includeResource = true;
 
    @Override
    public String getType() {
@@ -39,5 +41,19 @@ public class OpaPolicyRepresentation extends AbstractPolicyRepresentation {
       this.policyPath = policyPath;
    }
 
+   public boolean isIncludePermission( ) {
+      return includePermission;
+   }
 
+   public void setIncludePermission( boolean includePermission ) {
+      this.includePermission = includePermission;
+   }
+
+   public boolean isIncludeResource( ) {
+      return includeResource;
+   }
+
+   public void setIncludeResource( boolean includeResource ) {
+      this.includeResource = includeResource;
+   }
 }

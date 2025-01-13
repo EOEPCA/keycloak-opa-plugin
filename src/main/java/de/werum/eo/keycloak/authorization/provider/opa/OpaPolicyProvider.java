@@ -70,8 +70,11 @@ public class OpaPolicyProvider implements PolicyProvider {
 
       // ---- HttpClient variant
       try(final CloseableHttpClient httpClient = HttpClients.createDefault()) {
-         final boolean includePermission = isTrue( evaluation.getPolicy().getConfig().get( "input.includePermission" ) );
-         final boolean includeResource = isTrue( evaluation.getPolicy().getConfig().get( "input.includeResource" ) );
+         // Take true as default for now
+         final boolean includePermission = !isFalse( evaluation.getPolicy().getConfig().get( "input.includePermission" ) );
+         final boolean includeResource = !isFalse( evaluation.getPolicy().getConfig().get( "input.includeResource" ) );
+//         final boolean includePermission = isTrue( evaluation.getPolicy().getConfig().get( "input.includePermission" ) );
+//         final boolean includeResource = isTrue( evaluation.getPolicy().getConfig().get( "input.includeResource" ) );
 
          final Identity identity = evaluation.getContext().getIdentity();
          final ResourcePermission permission = evaluation.getPermission();
@@ -385,5 +388,14 @@ public class OpaPolicyProvider implements PolicyProvider {
          return (( Boolean ) value);
       else
          return value.toString().equalsIgnoreCase( "true" );
+   }
+
+   private static boolean isFalse( Object value ) {
+      if( value == null )
+         return false;
+      if( value instanceof Boolean )
+         return !(( Boolean ) value);
+      else
+         return value.toString().equalsIgnoreCase( "false" );
    }
 }

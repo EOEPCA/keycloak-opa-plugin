@@ -53,7 +53,7 @@ may not work with future versions of Keycloak out of the box.
 
 The Theme SPI used to add a custom UI for OPA policies also depends on
 the Keycloak version. The current Admin UI extension only works with
-Keycloak 24. An update for Keycloak 25 is being prepared.
+Keycloak 24. An update for Keycloak 26 is planned.
 
 ## Configuration
 
@@ -69,22 +69,22 @@ command line or as environment variables.
 
 ### Policy configuration
 
-Policies can meanwhile be created and basically configured via the Keycloak
-Admin UI.
+Policies can meanwhile be created and configured via the Keycloak
+Admin UI. It is possible to configure all the properties listed below.
 
-Additionally, it is possible to place a configuration file in the configured
-OPA policy directory. The base name of this file must match the policy name, and
-its extension must be `.properties`. The file may contain the following properties:
+Additionally, it is still possible (but not recommended any more) to place
+a configuration file in the configured OPA policy directory. The base name
+of this file must match the policy name, and its extension must be
+`.properties`. The file may contain the following properties:
 
 * `policyPath`: Subpath (e.g. `my_package/my_policy_rule`) to append to the OPA
-  base URI (deprecated, should be configured via UI)
-* `input.includePermission`: If this is set to `true`, the plugin adds
+  base URI
+* `input.includePermission`: If this is not set to `false`, the plugin adds
   a section with permission-related information to the input document.
-* `input.includeResource`: If this is set to `true`, the plugin adds
+* `input.includeResource`: If this is not set to `false`, the plugin adds
   resource-related information to the permission section of the input
   document. This implies that `input.includePermission` must also be set to
   `true`.
 
-Note that this way of configuring policies is a preliminary solution.
-It will be removed when all relevant properties (esp. `input.include*`)
-can be configured via the Admin UI.
+Note that this way of configuring policies was a preliminary solution and
+is meanwhile considered deprecated. It will be removed in a future release.
