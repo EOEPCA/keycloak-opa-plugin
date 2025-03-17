@@ -52,8 +52,10 @@ The Policy SPI of Keycloak is an internal SPI. This implies that the plugin
 may not work with future versions of Keycloak out of the box.
 
 The Theme SPI used to add a custom UI for OPA policies also depends on
-the Keycloak version. The current Admin UI extension only works with
-Keycloak 24. An update for Keycloak 26 is planned.
+the Keycloak version. The current Admin UI extension is derived
+from Keycloak 26.1.3 and has only been tested with this version.
+A `jar` file with the old adapted UI for Keycloak 24.0.5 is also
+included for historical reasons.
 
 ## Configuration
 
@@ -70,7 +72,7 @@ command line or as environment variables.
 ### Policy configuration
 
 Policies can meanwhile be created and configured via the Keycloak
-Admin UI. It is possible to configure all the properties listed below.
+Admin UI. It is possible to configure all the attributes listed below.
 
 Additionally, it is still possible (but not recommended any more) to place
 a configuration file in the configured OPA policy directory. The base name

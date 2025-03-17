@@ -27,6 +27,7 @@ import org.keycloak.authorization.model.Policy;
 import org.keycloak.authorization.model.Resource;
 import org.keycloak.authorization.model.ResourceServer;
 import org.keycloak.authorization.model.Scope;
+import org.keycloak.authorization.permission.ResourcePermission;
 import org.keycloak.authorization.policy.evaluation.DecisionResultCollector;
 import org.keycloak.authorization.policy.evaluation.DefaultEvaluation;
 import org.keycloak.authorization.policy.evaluation.Evaluation;
@@ -58,7 +59,7 @@ public class OpaPolicyProviderTest {
             URI.create( OPA_BASE_URL ),
             new File("."));
       final Evaluation evaluation = new DefaultEvaluation(
-            null,
+            new ResourcePermission(null, null, (ResourceServer) null),
             new EvaluationContext() {
                @Override
                public Identity getIdentity( ) {

@@ -1,4 +1,5 @@
 import type PolicyRepresentation from "@keycloak/keycloak-admin-client/lib/defs/policyRepresentation";
+import { useAlerts, useFetch } from "@keycloak/keycloak-ui-shared";
 import {
   ActionGroup,
   AlertVariant,
@@ -7,18 +8,15 @@ import {
   DropdownItem,
   PageSection,
 } from "@patternfly/react-core";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-
-import { adminClient } from "../../../admin-client";
-import { useAlerts } from "../../../components/alert/Alerts";
+import { useAdminClient } from "../../../admin-client";
 import { useConfirmDialog } from "../../../components/confirm-dialog/ConfirmDialog";
 import { FormAccess } from "../../../components/form/FormAccess";
-import { KeycloakSpinner } from "../../../components/keycloak-spinner/KeycloakSpinner";
+import { KeycloakSpinner } from "@keycloak/keycloak-ui-shared";
 import { ViewHeader } from "../../../components/view-header/ViewHeader";
-import { useFetch } from "../../../utils/useFetch";
 import { useParams } from "../../../utils/useParams";
 import { toAuthorizationTab } from "../../routes/AuthenticationTab";
 import {
@@ -33,6 +31,7 @@ import { JavaScript } from "./JavaScript";
 import { LogicSelector } from "./LogicSelector";
 import { NameDescription } from "./NameDescription";
 import { Regex } from "./Regex";
+import { Opa } from "./Opa";
 import { Role } from "./Role";
 import { Time } from "./Time";
 import { User } from "./User";
@@ -54,6 +53,7 @@ const COMPONENTS: {
   "client-scope": ClientScope,
   group: Group,
   regex: Regex,
+  opa: Opa,
   role: Role,
   time: Time,
   js: JavaScript,
@@ -62,6 +62,8 @@ const COMPONENTS: {
 export const isValidComponentType = (value: string) => value in COMPONENTS;
 
 export default function PolicyDetails() {
+  const { adminClient } = useAdminClient();
+
   const { t } = useTranslation();
   const { id, realm, policyId, policyType } = useParams<PolicyDetailsParams>();
   const navigate = useNavigate();
@@ -201,16 +203,16 @@ export default function PolicyDetails() {
           role="anyone" // if you get this far it means you have access
         >
           <FormProvider {...form}>
-            <NameDescription isDisabled={isDisabled} prefix="policy" />
+            <NameDescription isDisabled={isDisabled} />
             <ComponentType />
             <LogicSelector isDisabled={isDisabled} />
           </FormProvider>
           <ActionGroup>
-            <div className="pf-u-mt-md">
+            <div className="pf-v5-u-mt-md">
               <Button
                 isDisabled={isDisabled}
                 variant={ButtonVariant.primary}
-                className="pf-u-mr-md"
+                className="pf-v5-u-mr-md"
                 type="submit"
                 data-testid="save"
               >
