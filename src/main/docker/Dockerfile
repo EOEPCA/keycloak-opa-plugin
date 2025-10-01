@@ -14,7 +14,7 @@
 # Tie to revision 24.0.5 for now in order to avoid having different Keycloak versions on different platforms.
 # Note: Image -r8 does not seem to work with Helm chart 21.4.4, so use -r0 for now.
 #FROM docker.io/bitnami/keycloak:24.0.5-debian-12-r0
-FROM docker.io/bitnami/keycloak:26.1.3-debian-12-r0
+FROM docker.io/bitnamilegacy/keycloak:26.1.3-debian-12-r0
 #FROM docker.io/bitnami/keycloak:latest
 
 ARG PLUGIN_VERSION="*"
